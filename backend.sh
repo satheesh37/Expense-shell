@@ -77,11 +77,11 @@ VALIDATE $? "Schema loading"
 systemctl daemon-reload &>>LOG_FILE
 VALIDATE $? "Daemon reload"
 
-systemctl enable backend 
+systemctl enable backend &>>LOG_FILE
 VALIDATE $? "Enabled backend"
 
 
-systemctl restart backend 
+systemctl restart backend &>>LOG_FILE
 VALIDATE $? "Restarted backend"
 
 
