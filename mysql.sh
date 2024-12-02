@@ -17,7 +17,7 @@ USERID=$(id -u)
 CHECK_ROOT(){
      if [ $USERID -ne 0 ]
     then
-        echo -e "$R Please run this script $N" | tee -a $LOGS_FILE
+        echo -e "$R Please run this script $N" | tee -a $LOG_FILE
         exit 1
      fi
 }
@@ -25,26 +25,26 @@ CHECK_ROOT(){
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
-        echo -e "$2 is....$R FAILED $N" | tee -a $LOGS_FILE 
+        echo -e "$2 is....$R FAILED $N" | tee -a $LOG_FILE 
         exit 1
     else 
-        echo -e "$2 is... $G SUCCESS $N" | tee -a $LOGS_FILE 
+        echo -e "$2 is... $G SUCCESS $N" | tee -a $LOG_FILE 
     fi    
 }
-echo "script started executing at: $(date)" | tee -a $LOGS_FILE 
+echo "script started executing at: $(date)" | tee -a $LOG_FILE 
 
 CHECK_ROOT
 
-dnf install mysql-server -y &>>$LOGS_FILE 
+dnf install mysql-server -y &>>$LOG_FILE 
 VALIDATE $? "Installing Mysql Server"
 
-systemctl enable mysqld &>>$LOGS_FILE 
+systemctl enable mysqld &>>$LOG_FILE 
 VALIDATE $? "enabled Mysql Server"
 
-systemctl start mysql &>>$LOGS_FILE 
+systemctl start mysql &>>$LOG_FILE 
 VALIDATE $? "Started Mysql server"
 
-mysql_secure_installation --set--root-pass ExpenseApp@1 &>>$LOGS_FILE 
+mysql_secure_installation --set--root-pass ExpenseApp@1 &>>$LOG_FILE 
 VALIDATE $? "setting up root password"
 
 
