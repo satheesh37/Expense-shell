@@ -35,15 +35,23 @@ VALIDATE(){
 
 CHECK_ROOT
 
-dnf module disable nodejs -y 
+dnf module disable nodejs -y &>>LOG_FILE
 VALIDATE $? "Disable default nodesj"
 
-dnf module enable nodejs:20 -y
+dnf module enable nodejs:20 -y &>>LOG_FILE
 VALIDATE $? "Enable nodesj:20"
 
-dnf install nodejs -y
+dnf install nodejs -y &>>LOG_FILE
 VALIDATE $? "Install nodejs"
 
-useradd expense
-VALIDATE $? "Craeting expense user"
+id expense &>>LOG_FILE
+if [ $? -ne 0 ]
+then
+    echo -e "expense user not exits...$G creating $N"
+    useradd expense &>>LOG_FILE
+    VALIDATE $? "Craeting expense user"
+else
+    echo -e "expense user already exits..... $Y SKIPPING $N"
+fi    
+
 
