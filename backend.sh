@@ -71,17 +71,17 @@ cp /home/ec2-user/Expense-shell/backend.service /etc/systemd/system/backend.serv
 dnf install mysql -y &>>LOG_FILE
 VALIDATE $? "Installing mysql client"
 
-mysql -h mysql.daws01.online -uroot -pExpenseApp@1 < /app/schema/backend.sql
+mysql -h mysql.daws01.online -uroot -pExpenseApp@1 < /app/schema/backend.sql &>>LOG_FILE
 VALIDATE $? "Schema loading"
 
 systemctl daemon-reload &>>LOG_FILE
 VALIDATE $? "Daemon reload"
 
-systemctl enable backend &>>LOG_FILE
+systemctl enable backend 
 VALIDATE $? "Enabled backend"
 
 
-systemctl restart backend &>>LOG_FILE
+systemctl restart backend 
 VALIDATE $? "Restarted backend"
 
 
